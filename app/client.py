@@ -19,5 +19,8 @@ class MQTTClient(mqtt.Client):
         self.on_message = self.on_message
         self.connect(host=MQTT_HOST, port=MQTT_PORT, keepalive=MQTT_KEEPALIVE)
         print("Client created")
+    
+    def loop_start(self) -> int | None:
+        return super().loop_start()
 
         

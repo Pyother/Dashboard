@@ -129,6 +129,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CORS_ALLOW_WEBSOCKETS = True
+
 MQTT_HOST = 'localhost'
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MQTT Dashboard</title>
+</head>
+<body>
+    <h1>MQTT Dashboard</h1>
+    <div id="messages"></div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8000/ws/dashboard/');
+
+        socket.onopen = function(event) {
+            console.log("WebSocket connection opened");
+            socket.send("Test message");
+        };
+
+        socket.onmessage = function(event) {
+            console.log("onmessage works!");
+
+            // Use the raw message content
+            const message = event.data;
+            console.log("Received message:", message);
+            updatePage(message);
+        };
+
+        socket.onclose = function(event) {
+            console.log("WebSocket connection closed");
+        };
+
+        socket.onerror = function(event) {
+            console.error("WebSocket error:", event);
+        };
+
+        function updatePage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            document.getElementById('messages').appendChild(messageElement);
+        };
+    </script>
+</body>
+</html>

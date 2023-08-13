@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from django.urls import path, include
-from .views import publish_message
+# app/urls.py
 
-urlpatterns = [
-    path('', publish_message, name='publish_message')
+from django.urls import path
+from . import views
+
+urlpatterns = [ 
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]
