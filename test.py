@@ -1,13 +1,15 @@
-import websocket
+from websocket import create_connection
+import json
 
-url = "ws://localhost:8000/ws/dashboard/"
-ws = websocket.create_connection(url)
+def send_mess_client():
+    try:
+        ws = create_connection("ws://127.0.0.1:8000/ws/dashboard/")
+        ws.send(json.dumps({
+            "message": "message from backend"
+        }))
+        ws.close()
+    except:
+        pass
 
-try:
-    while True:
-        message = input("Enter a message to send: ")
-        ws.send(message)
-except KeyboardInterrupt:
-    pass
-finally:
-    ws.close()
+def main():
+    send_mess_client()
