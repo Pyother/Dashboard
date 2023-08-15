@@ -13,10 +13,10 @@ class MQTTConsumer(AsyncWebsocketConsumer):
         self.mqtt_client = mqtt.Client()
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
-        self.mqtt_client.connect("localhost", 1883, 60)
+        self.mqtt_client.connect("test.mosquitto.org", 1883, 60)
         self.mqtt_client.loop_start()
         self.ws = None
-        self.run_mqtt_listener = True  
+        self.run_mqtt_listener = True 
         asyncio.ensure_future(self.mqtt_listener())  
         print("Backend -> LOOP STARTED")
 
@@ -27,9 +27,11 @@ class MQTTConsumer(AsyncWebsocketConsumer):
     # ----------------------------------------------------------------
     
     # 2. Methods to handle MQTT connection and messages:
-                
+    
     def on_connect(self, client, userdata, flags, rc):
         client.subscribe("measurements")
+        client.subscribe("device/positionX")
+        client.subscribe("device/positionY")
         print("Backend -> ✓ Client connected")
 
     def on_message(self, client, userdata, msg):
