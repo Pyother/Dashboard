@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Navigation from '../components/Navigation';
+import '../App.css';
 
 const HomeView = () => {
     const [messages, setMessages] = useState([]);
@@ -36,11 +38,8 @@ const HomeView = () => {
 
     return (
         <div>
-            <h1>MQTT Dashboard React</h1>
             <div>
-                {messages.map((message, index) => (
-                    <div key={index}>{message}</div>
-                ))}
+                <Navigation />
             </div>
         </div>
     );

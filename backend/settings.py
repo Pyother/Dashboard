@@ -124,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
@@ -138,3 +139,5 @@ CORS_ALLOW_WEBSOCKETS = True
 MQTT_HOST = 'localhost'
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60 
+
+ALLOWED_HOSTS = ['127.0.0.1']

@@ -1,0 +1,34 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-family: 'Roboto Flex', sans-serif;
+    background-color: black;
+}
+
+h1 {
+    padding: 1em;
+    margin: 0;
+    color: black;
+}
+
+.root {
+    position: absolute;
+    top: 0;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation {
+    width: 100%;
+    height: 100vh;
+    background-color: inherit;
+    color: white;
+}
+
