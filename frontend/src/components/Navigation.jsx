@@ -17,7 +17,7 @@ const Navigation = () => {
                     
                     <Grid item xs={4} md={12} className="panel-grid centered">
                         <Stack className="panel-stack">
-                            <IconButton children={<InsertChartOutlinedSharpIcon fontSize="large" style={{color: "white"}}/>}
+                            <IconButton children={<InsertChartOutlinedSharpIcon fontSize="large" style={{color: "black"}}/>}
                                 onClick={() => setMode('statistics')}></IconButton> 
                             <p>Statistics</p>
                         </Stack>
@@ -27,7 +27,7 @@ const Navigation = () => {
                     </Grid>
                     <Grid item xs={4} md={12} className="panel-grid centered">
                         <Stack className="panel-stack">
-                            <IconButton children={<SportsEsportsOutlinedIcon fontSize="large" style={{color: "white"}}/>}
+                            <IconButton children={<SportsEsportsOutlinedIcon fontSize="large" style={{color: "black"}}/>}
                                 onClick={() => setMode('driving')}></IconButton>
                             <p>Drive</p>
                         </Stack>
@@ -37,7 +37,7 @@ const Navigation = () => {
                     </Grid>
                     <Grid item xs={4} md={12} className="panel-grid centered">
                         <Stack className="panel-stack">
-                            <IconButton children={<SettingsOutlinedIcon fontSize="large" style={{color: "white"}}/>}></IconButton>
+                            <IconButton children={<SettingsOutlinedIcon fontSize="large" style={{color: "black"}}/>}></IconButton>
                             <p>Settings</p>
                         </Stack>
                     </Grid>

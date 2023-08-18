@@ -19,10 +19,6 @@ function App() {
     };
   }, []);
 
-  if (windowHeight < 600) {
-    // Tutaj możesz podjąć odpowiednie działania dla małego ekranu
-  }
-
   return (
     <div>
       {

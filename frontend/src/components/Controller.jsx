@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
+import GamesOutlinedIcon from '@mui/icons-material/GamesOutlined';
 import '../App.css';
 
 const Controller = () => {
@@ -22,7 +23,7 @@ const Controller = () => {
                     transform: `scale(${scale})`,
                     transition: "transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67)"
                 }}>
-                    
+                    <GamesOutlinedIcon className='icons'/>
                 </div>
             </Draggable>
         </div>

@@ -5,7 +5,7 @@ html, body {
     top: 0;
     width: 100%;
     font-family: 'Roboto Flex', sans-serif;
-    background-color: black;
+    background-color: lightgray;
 }
 
 h1 {
@@ -16,6 +16,7 @@ h1 {
 
 p {
     margin: 0.5em;
+    color: black;
 }
 
 .root {
@@ -24,6 +25,7 @@ p {
 }
 
 .icons {
+    color: black;
     font-size: xx-large;
 }
 
@@ -56,19 +58,16 @@ p {
 }
 
 .controller {
-    color: "black";
-    padding: 2em;
-    border-radius: 2em;
-    background-color: wheat;
-    width: 0em;
-    border: 5px solid lightgrey;
+    padding: 1em;
+    background-color: inherit;
+    width: 2em;
+    border: 5px solid white;
 }
 
 .movement-box {
     width: 100%;
     height: 9em;
-    background-color: #e9eef7; 
-    border-radius: 2em;
+    background-color: grey; 
     position: relative;
     display: flex;
     justify-content: center;
@@ -79,10 +78,13 @@ p {
     padding: 2em;
 }
 
+.movement-info {
+    padding: 0em 2em;
+}
+
 .scroll-container {
     height: 100%;
 }
-
 
 @media (max-width: 900px) {
     .panel {
@@ -103,6 +105,12 @@ p {
     }
     .divider-mobile {
         display: block;
+    }
+    .statistics {
+        height: calc(100vh - 32em);
+    }
+    .movement-info {
+        display: none !important;
     }
 }
 
@@ -125,6 +133,12 @@ p {
     }
     .divider-mobile {
         display: none;
+    }
+    .statistics {
+        height: calc(100vh - 26em);
+    }
+    .movement-info {
+        display: flex !important;
     }
 }
 
