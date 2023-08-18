@@ -6,6 +6,7 @@ html, body {
     width: 100%;
     font-family: 'Roboto Flex', sans-serif;
     background-color: black;
+    max-height: 100vh;
 }
 
 h1 {

@@ -14,9 +14,17 @@ h1 {
     color: black;
 }
 
+p {
+    margin: 0.5em;
+}
+
 .root {
     position: absolute;
     top: 0;
+}
+
+.icons {
+    font-size: xx-large;
 }
 
 .centered {
@@ -25,10 +33,98 @@ h1 {
     align-items: center;
 }
 
+.paragraph {
+    color: black; 
+    text-align: left;
+    padding: 0em 1.5em 0em 1.5em;
+}
+
 .navigation {
     width: 100%;
-    height: 100vh;
     background-color: inherit;
     color: white;
+}
+
+.panel {
+    color: white;
+}
+
+.main {
+    height: calc(100vh - 0em);
+    overflow: auto;
+    padding: 2em;
+}
+
+.controller {
+    color: "black";
+    padding: 2em;
+    border-radius: 2em;
+    background-color: wheat;
+    width: 0em;
+    border: 5px solid lightgrey;
+}
+
+.movement-box {
+    width: 100%;
+    height: 9em;
+    background-color: #e9eef7; 
+    border-radius: 2em;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.movement-container {
+    padding: 2em;
+}
+
+.scroll-container {
+    height: 100%;
+}
+
+
+@media (max-width: 900px) {
+    .panel {
+        padding: 1em;
+    }
+    .panel-grid {
+        justify-content: center !important;
+    }
+    .panel-stack {
+        display: flex !important;
+    }
+    .main {
+        height: calc(100vh - 8em);
+        padding-top: 0;
+    }
+    .movement-box {
+        height: 9em;
+    }
+    .divider-mobile {
+        display: block;
+    }
+}
+
+@media (min-width: 901px) {
+    .panel {
+        padding: 2em;
+    }
+    .panel-grid {
+        justify-content: left !important;
+    }
+    .panel-stack {
+        display: contents !important;
+    }
+    .main {
+        height: calc(100vh - 0em);
+        padding-top: 2em;
+    }
+    .movement-box {
+        height: 12em;
+    }
+    .divider-mobile {
+        display: none;
+    }
 }
 
