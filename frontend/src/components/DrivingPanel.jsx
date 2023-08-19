@@ -19,8 +19,8 @@ const DrivingPanel = () => {
                     </Grid>
                     <Grid item xs={0} md={7} className='movement-info'>
                         <div>
-                            <p><strong>How to drive?</strong></p>
-                            <p>Gently move the square on the left and the vehicle will move in the indicated direction.</p>
+                            <p style={{color: "black"}}><strong>How to drive?</strong></p>
+                            <p style={{color: "black"}}>Gently move the circle on the left and the vehicle will move in the indicated direction.</p>
                         </div>
                     </Grid>
                 </Grid>

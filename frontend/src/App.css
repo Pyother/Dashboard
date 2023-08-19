@@ -5,7 +5,7 @@ html, body {
     top: 0;
     width: 100%;
     font-family: 'Roboto Flex', sans-serif;
-    background-color: lightgray;
+    background-color: white;
 }
 
 h1 {
@@ -16,7 +16,7 @@ h1 {
 
 p {
     margin: 0.5em;
-    color: black;
+    color: white;
 }
 
 .root {
@@ -43,7 +43,7 @@ p {
 
 .navigation {
     width: 100%;
-    background-color: inherit;
+    background-color: black;
     color: white;
 }
 
@@ -58,20 +58,20 @@ p {
 }
 
 .controller {
-    padding: 1em;
-    background-color: inherit;
-    width: 2em;
-    border: 5px solid white;
+    padding: 0.1em;
+    background-color: black;
+    border-radius: 2em;
 }
 
 .movement-box {
     width: 100%;
     height: 9em;
-    background-color: grey; 
+    background-color: lightgrey; 
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    border-radius: 1em;
 }
 
 .movement-container {
@@ -88,7 +88,7 @@ p {
 
 @media (max-width: 900px) {
     .panel {
-        padding: 1em;
+        padding: 1em 2em;
     }
     .panel-grid {
         justify-content: center !important;
@@ -127,6 +127,7 @@ p {
     .main {
         height: calc(100vh - 0em);
         padding-top: 2em;
+        padding-left: 0;
     }
     .movement-box {
         height: 12em;

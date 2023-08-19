@@ -23,7 +23,9 @@ const Controller = () => {
                     transform: `scale(${scale})`,
                     transition: "transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67)"
                 }}>
-                    <GamesOutlinedIcon className='icons'/>
+                    <div style={{padding: "1em", backgroundColor: "grey", borderRadius: "2em"}}>
+                        <GamesOutlinedIcon className='icons'/>
+                    </div>
                 </div>
             </Draggable>
         </div>
