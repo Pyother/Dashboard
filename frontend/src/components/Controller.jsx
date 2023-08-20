@@ -9,6 +9,9 @@ const Controller = () => {
 
     const handleDrag = (event, data) => {
         console.log("Current position: ", data.x, data.y);
+        const storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+        storedData.push({ x: data.x, y: data.y });
+        localStorage.setItem('storedData', JSON.stringify(storedData));
     }
 
     const handleStop = () => {

@@ -50,6 +50,7 @@ const StatisticsPanel = () => {
             <Grid item xs={12} md={12} className='statistics'>
                 <p className='paragraph'>
                     <strong>Statistics</strong>
+                    
                 </p>
             </Grid>
         </Grid>
