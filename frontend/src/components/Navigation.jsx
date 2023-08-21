@@ -9,6 +9,7 @@ import '../App.css';
 
 const Navigation = () => {
     const [mode, setMode] = useState('statistics');
+    const isMediumWidth = window.innerWidth >= 901 && window.innerWidth <= 1200;
 
     return (
         <Grid container className="navigation">
@@ -19,7 +20,7 @@ const Navigation = () => {
                             <IconButton children={<InsertChartOutlinedSharpIcon fontSize="large" 
                                 style={{color: mode === "statistics" ? "black" : "white"}}/>}
                                 onClick={() => setMode('statistics')}></IconButton> 
-                            <p style={{color: mode === "statistics" ? "black" : "white"}}>Statistics</p>
+                                <p className="medium-hide" style={{color: mode === "statistics" ? "black" : "white"}}>Statistics</p>
                         </Stack>
                     </Grid>
                     <Grid item xs={4} md={12} className="panel-grid centered" style={{backgroundColor: mode === "driving" ? "white" : "black", borderRadius: "1em"}}>
@@ -27,13 +28,13 @@ const Navigation = () => {
                             <IconButton children={<SportsEsportsOutlinedIcon fontSize="large" 
                                 style={{color: mode === "driving" ? "black" : "white"}}/>}
                                 onClick={() => setMode('driving')}></IconButton>
-                            <p style={{color: mode === "driving" ? "black" : "white"}}>Drive</p>
+                            <p className="medium-hide" style={{color: mode === "driving" ? "black" : "white"}}>Drive</p>
                         </Stack>
                     </Grid>
                     <Grid item xs={4} md={12} className="panel-grid centered">
                         <Stack className="panel-stack">
                             <IconButton children={<SettingsOutlinedIcon fontSize="large" style={{color: "white"}}/>}></IconButton>
-                            <p>Settings</p>
+                            <p className="medium-hide">Settings</p>
                         </Stack>
                     </Grid>
                 </Grid>

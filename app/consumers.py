@@ -8,7 +8,7 @@ class MQTTConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
-        await self.send(text_data="Backend -> Connection established")
+        await self.send(text_data="Start")
         self.mqtt_messages = []
         self.mqtt_client = mqtt.Client()
         self.mqtt_client.on_connect = self.on_connect

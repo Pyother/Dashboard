@@ -86,6 +86,15 @@ p {
     height: 100%;
 }
 
+.table-cell-head {
+    text-align: left;
+    padding-left: 0 !important;
+} 
+
+.table-cell-body {
+    text-align: center;
+}
+
 @media (max-width: 900px) {
     .panel {
         padding: 1em 2em;
@@ -143,3 +152,8 @@ p {
     }
 }
 
+@media (min-width: 901px) and (max-width: 1200px) {
+    .medium-hide {
+        display: none;
+    }
+}
