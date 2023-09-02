@@ -59,30 +59,6 @@ const StatisticsPanel = () => {
             <Grid item xs={12} md={12} className='statistics'>
                 <p className='paragraph'>
                     <strong>Statistics</strong>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell className="table-cell-head">Distance 0°</TableCell>
-                                    <TableCell className="table-cell-head">Distance 45°</TableCell>
-                                    <TableCell className="table-cell-head">Distance 90°</TableCell>
-                                    <TableCell className="table-cell-head">Distance 135°</TableCell>
-                                    <TableCell className="table-cell-head">Distance 180°</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row, index) => (
-                                    <TableRow key={index}>
-                                        {row.map((cellValue, cellIndex) => (
-                                            <TableCell key={cellIndex} className="table-cell-body">
-                                                {cellValue}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
                 </p>
             </Grid>
         </Grid>

@@ -1,49 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import Controller from './Controller';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    ResponsiveContainer,
-  } from 'recharts';
 import '../App.css';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 const DrivingPanel = () => {
-
-    const [data, setData] = useState([]);
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const storedData = JSON.parse(localStorage.getItem('storedData')) || [];
+        const newSocket = new W3CWebSocket('ws://localhost:8000/ws/dashboard/');
     
-        const chartData = storedData.map((item, index) => ({
-            name: `Position ${index + 1}`,
-            value: item.x, 
-        }));
+        newSocket.addEventListener('open', () => {
+            console.log('WebSocket connected');
+        });
     
-        setData(chartData);
-    }, []);
+        setSocket(newSocket); 
     
-    return(
+        return () => {
+            if (newSocket) {
+                newSocket.close();
+            }
+        };
+    }, []); 
+
+    const sendWebSocketMessage = () => {
+        if (socket && socket.readyState === socket.OPEN) {
+            // Sprawdź, czy WebSocket jest w stanie otwartym przed wysłaniem wiadomości
+            socket.send('Hello World');
+            
+            // Dodaj event listener do nasłuchiwania odpowiedzi
+            socket.addEventListener('message', (event) => {
+                console.log('Received message from server:', event.data);
+                // Tutaj możesz przetwarzać odpowiedź od serwera
+            });
+        }
+    };
+
+    return (
         <Grid container>
             <Grid item xs={12} md={12}>
                 <h1>Area Explorer Driving Panel</h1>
             </Grid>
-            <Grid item xs={10} md={11.5} className='statistics'>
-                <div style={{ width: '100%', height: '100%' }}>
-                    <ResponsiveContainer>
-                        <LineChart data={data}>
-                        <CartesianGrid strokeDasharray='3 3' />
-                        <XAxis dataKey='name' />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type='monotone' dataKey='value' stroke='#8884d8' />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
+            <Grid item xs={10} md={11.5} className='statistics centered'>
+                <Button variant='contained' color='success' onClick={sendWebSocketMessage}>
+                    Send WebSocket Message
+                </Button>
             </Grid>
             <Grid item xs={12} md={12} className="movement-container">
                 <Grid container>
@@ -52,8 +53,8 @@ const DrivingPanel = () => {
                     </Grid>
                     <Grid item xs={0} md={7} className='movement-info'>
                         <div>
-                            <p style={{color: "black"}}><strong>How to drive?</strong></p>
-                            <p style={{color: "black"}}>Gently move the circle on the left and the vehicle will move in the indicated direction.</p>
+                            <p style={{ color: "black" }}><strong>How to drive?</strong></p>
+                            <p style={{ color: "black" }}>Gently move the circle on the left and the vehicle will move in the indicated direction.</p>
                         </div>
                     </Grid>
                 </Grid>

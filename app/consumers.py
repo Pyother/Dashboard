@@ -5,7 +5,7 @@ import asyncio
 class MQTTConsumer(AsyncWebsocketConsumer):
 
     # 1. Methods of AsyncWebsocketConsumer class:
-
+    
     async def connect(self):
         await self.accept()
         await self.send(text_data="Start")
@@ -19,6 +19,9 @@ class MQTTConsumer(AsyncWebsocketConsumer):
         self.run_mqtt_listener = True 
         asyncio.ensure_future(self.mqtt_listener())  
         print("Backend -> LOOP STARTED")
+
+    async def receive(self, text_data):
+        print("Message reeived on WebSockets: " + text_data)
 
     async def disconnect(self, close_code):
         self.mqtt_client.loop_stop()
