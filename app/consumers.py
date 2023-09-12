@@ -22,6 +22,7 @@ class MQTTConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         print("Message reeived on WebSockets: " + text_data)
+        self.mqtt_client.publish(topic="measurements", payload=text_data)
 
     async def disconnect(self, close_code):
         self.mqtt_client.loop_stop()

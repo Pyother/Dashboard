@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Grid, Stack, IconButton, Divider } from '@mui/material';
+import { Grid, Stack, IconButton } from '@mui/material';
 import StatisticsPanel from "./StatisticsPanel";
 import DrivingPanel from "./DrivingPanel";
 import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined';
@@ -9,7 +9,6 @@ import '../App.css';
 
 const Navigation = () => {
     const [mode, setMode] = useState('statistics');
-    const isMediumWidth = window.innerWidth >= 901 && window.innerWidth <= 1200;
 
     return (
         <Grid container className="navigation">

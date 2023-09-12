@@ -44,11 +44,11 @@ p {
 .navigation {
     width: 100%;
     background-color: black;
-    color: white;
+    color: black;
 }
 
 .panel {
-    color: white;
+    color: black;
 }
 
 .main {
@@ -94,6 +94,8 @@ p {
 .table-cell-body {
     text-align: center;
 }
+
+
 
 @media (max-width: 900px) {
     .panel {
@@ -149,5 +151,23 @@ p {
 @media (min-width: 901px) and (max-width: 1200px) {
     .medium-hide {
         display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .statistics-panel {
+        height: calc(100vh - 22em);
+    }
+}
+
+@media (min-width: 451px) and (max-width: 900px) {
+    .statistics-panel {
+        height: calc(100vh - 20em);
+    }
+}
+
+@media (min-width: 901px) {
+    .statistics-panel {
+        height: calc(100vh - 14em);
     }
 }

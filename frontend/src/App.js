@@ -1,15 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import HomeView from './views/HomeView';
+import Navigation from './components/Navigation';
 import './App.css';
 
 function App() {
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  
+  const [areDimensionValid, setAreDimensionsValid] = useState(
+    window.innerHeight > 600 && window.innerWidth > 320 ? true : false
+  )
 
   useEffect(() => {
     const handleResize = () => {
-      const newHeight = window.innerHeight;
-      setWindowHeight(newHeight);
-      console.log("Current window height:", newHeight);
+      const dimensionsCheck = window.innerHeight > 600 && window.innerWidth > 320;
+      if(window.innerWidth < 768) {
+        localStorage.setItem('deviceWidth', "Small");
+        setAreDimensionsValid(dimensionsCheck); 
+      } else {
+        localStorage.setItem('deviceWidth', "Medium");
+        setAreDimensionsValid(dimensionsCheck); 
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -22,9 +30,10 @@ function App() {
   return (
     <div>
       {
-        windowHeight > 600 ? <HomeView/> : 
+        areDimensionValid ? 
+        <Navigation/> : 
         <div className='centered' style={{width: "100%", height: "100vh"}}>
-          <p color='white'>Sorry, screen height not supported</p>
+          <p style={{color: 'black'}}>Sorry, screen dimensions not supported</p>
         </div>
       }
     </div>

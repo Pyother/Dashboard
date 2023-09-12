@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Grid, Checkbox, Tabs, Tab } from '@mui/material';
 import '../App.css';
 
 const StatisticsPanel = () => {
     const [messages, setMessages] = useState([]);
     const [rows, setRows] = useState([]);
+    const [currentChart, setCurrentChart] = useState(0);
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8000/ws/dashboard/');
@@ -22,7 +23,6 @@ const StatisticsPanel = () => {
             if (message !== "Start") {
                 const newRow = message.split(" ");
                 setRows(prevRows => [...prevRows, newRow]);
-                
             }
 
             updatePage(message);
@@ -45,21 +45,35 @@ const StatisticsPanel = () => {
         setMessages(prevMessages => [...prevMessages, message]);
     };
 
+    const handleChartChange = (event, newValue) => {
+        setCurrentChart(newValue);
+    } 
 
     return (
         <Grid container style={{}}>
             <Grid item xs={12} md={12}>
                 <h1>Area Explorer Dashboard</h1>
             </Grid>
-            <Grid item xs={12} md={12} className='centered' style={{justifyContent: "left"}}>
-                <p className='paragraph'>
-                    <strong>Last message: </strong>{localStorage.getItem("lastMessage")}
-                </p>
-            </Grid>
-            <Grid item xs={12} md={12} className='statistics'>
+            <Grid item xs={12} md={12} className='statistics-panel'>
                 <p className='paragraph'>
                     <strong>Statistics</strong>
                 </p>
+                <Grid container>
+                    <Tabs 
+                        value={currentChart} 
+                        onChange={handleChartChange} 
+                        indicatorColor="secondary"
+                        textColor="secondary"
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                    >
+                        <Tab label="WiFi Download"/>
+                        <Tab label="WiFi Upload"/>
+                        <Tab label="Gases"/>
+                        <Tab label="Map"/>
+                    </Tabs>
+                </Grid>
             </Grid>
         </Grid>
     );
