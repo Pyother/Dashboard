@@ -95,7 +95,10 @@ p {
     text-align: center;
 }
 
-
+.stats {
+    padding: 2em;
+    height: calc(100% - 2em);
+}
 
 @media (max-width: 900px) {
     .panel {
@@ -119,6 +122,10 @@ p {
     }
     .movement-info {
         display: none !important;
+    }
+    .stats {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Checkbox, Tabs, Tab } from '@mui/material';
+import { Grid, Tabs, Tab } from '@mui/material';
+import WiFiChart from './WiFiChart';
 import '../App.css';
 
 const StatisticsPanel = () => {
@@ -23,6 +24,20 @@ const StatisticsPanel = () => {
             if (message !== "Start") {
                 const newRow = message.split(" ");
                 setRows(prevRows => [...prevRows, newRow]);
+            }
+
+            if(message.includes("Data_callback")) {
+                console.log("Data Callback")
+                const parts = message.split("|")
+                const jsonString = parts[1].replace(/'/g, '"');
+                
+                try {
+                    const jsonData = JSON.parse(jsonString);
+                    console.log(jsonData);
+                    localStorage.setItem("data", jsonData);
+                } catch (error) {
+                    console.error("Błąd parsowania JSON:", error);
+                }
             }
 
             updatePage(message);
@@ -55,9 +70,6 @@ const StatisticsPanel = () => {
                 <h1>Area Explorer Dashboard</h1>
             </Grid>
             <Grid item xs={12} md={12} className='statistics-panel'>
-                <p className='paragraph'>
-                    <strong>Statistics</strong>
-                </p>
                 <Grid container>
                     <Tabs 
                         value={currentChart} 
@@ -68,12 +80,16 @@ const StatisticsPanel = () => {
                         scrollButtons
                         allowScrollButtonsMobile
                     >
-                        <Tab label="WiFi Download"/>
-                        <Tab label="WiFi Upload"/>
+                        <Tab label="WiFi"/>
                         <Tab label="Gases"/>
                         <Tab label="Map"/>
                     </Tabs>
                 </Grid>
+                {
+                    currentChart === 0 ? 
+                    <WiFiChart/> :
+                    <></>
+                }
             </Grid>
         </Grid>
     );
