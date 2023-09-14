@@ -1,7 +1,6 @@
 import paho.mqtt.client as mqtt
 from channels.generic.websocket import AsyncWebsocketConsumer
 import asyncio
-import json
 
 class MQTTConsumer(AsyncWebsocketConsumer):
 
@@ -41,6 +40,7 @@ class MQTTConsumer(AsyncWebsocketConsumer):
         message = msg.payload.decode("utf-8")
         print("Backend -> Received message: " + message)
 
+        # Speedtest callback handling:
         if "wifitest_callback" in message:
             print("Speedtest callback received")
             parts = message.split(":")
@@ -65,6 +65,22 @@ class MQTTConsumer(AsyncWebsocketConsumer):
                 }
             }
             message = 'Data_callback|' + str(data)
+        # ---------------------------------------------------------------
+
+        # Drive callback handling:
+        if "drive_callback" in message:
+            pass
+        # ---------------------------------------------------------------
+
+        # Carbon monoxide measurement callback handling:
+        if "carbon_monoxide_callback" in message:
+            pass
+        # ---------------------------------------------------------------
+
+        # Methane measurement callback handling:
+        if "methane_callback" in message:
+            pass
+        # ---------------------------------------------------------------
 
         self.mqtt_messages.append(message)
 

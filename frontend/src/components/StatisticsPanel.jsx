@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Tabs, Tab } from '@mui/material';
 import WiFiChart from './WiFiChart';
+import PositionChart from './PositionChart';
+import GasesChart from './GasesChart';
 import '../App.css';
 
 const StatisticsPanel = () => {
     const [messages, setMessages] = useState([]);
     const [rows, setRows] = useState([]);
     const [currentChart, setCurrentChart] = useState(0);
+    
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8000/ws/dashboard/');
@@ -34,7 +37,25 @@ const StatisticsPanel = () => {
                 try {
                     const jsonData = JSON.parse(jsonString);
                     console.log(jsonData);
-                    localStorage.setItem("data", jsonData);
+
+                    const megabitsDownloadString = localStorage.getItem('megabitsDownload') || '[]';
+                    const megabitsUploadString = localStorage.getItem('megabitsUpload') || '[]';
+
+                    const megabitsDownload = JSON.parse(megabitsDownloadString);
+                    const megabitsUpload = JSON.parse(megabitsUploadString);
+
+                    // Speedtest:
+                    if (
+                        typeof jsonData["speedtest"]["megabits_download"] === 'number' &&
+                        typeof jsonData["speedtest"]["megabits_upload"] === 'number'
+                    ) {
+                        console.log("Proper speedtest data");
+                        megabitsDownload.push(parseFloat(jsonData["speedtest"]["megabits_download"]));
+                        megabitsUpload.push(parseFloat(jsonData["speedtest"]["megabits_upload"]));
+                        
+                        localStorage.setItem("megabitsDownload", JSON.stringify(megabitsDownload));
+                        localStorage.setItem("megabitsUpload", JSON.stringify(megabitsUpload));
+                    }
                 } catch (error) {
                     console.error("Błąd parsowania JSON:", error);
                 }
@@ -81,13 +102,17 @@ const StatisticsPanel = () => {
                         allowScrollButtonsMobile
                     >
                         <Tab label="WiFi"/>
+                        <Tab label="Position"/>
                         <Tab label="Gases"/>
-                        <Tab label="Map"/>
                     </Tabs>
                 </Grid>
                 {
                     currentChart === 0 ? 
-                    <WiFiChart/> :
+                    <WiFiChart/> : 
+                    currentChart === 1 ?
+                    <PositionChart/> : 
+                    currentChart === 2 ?
+                    <GasesChart/> :
                     <></>
                 }
             </Grid>

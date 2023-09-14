@@ -1,39 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Button } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const data = [
-    {
-        number: 1,
-        megabits_download: 40,
-        megabits_upload: 30,
-    },
-    {
-        number: 2,
-        megabits_download: 50,
-        megabits_upload: 50,
-    },
-    {
-        number: 3,
-        megabits_download: 100,
-        megabits_upload: 30,
-    },
-    {
-        number: 4,
-        megabits_download: 30,
-        megabits_upload: 60,
-    },
-    {
-        number: 5,
-        megabits_download: 120,
-        megabits_upload: 110,
-    }
-]
-
 const WiFiChart = () => {
     const [socket, setSocket] = useState(null);
-    const [message, setMessage] = useState('');
+    const [newJson, setNewJson] = useState([]);
+    
+    const updateChartData = () => {
+        const newDataDownload = JSON.parse(localStorage.getItem('megabitsDownload')) || [];
+        const newDataUpload = JSON.parse(localStorage.getItem('megabitsUpload')) || [];
+        const array = [];
+        for (let i = 0; i < newDataDownload.length; i++) {
+            const row = {
+                number: i,
+                megabits_download: newDataDownload[i],
+                megabits_upload: newDataUpload[i]
+            };
+            array.push(row);
+        }
+        setNewJson(array);
+    };
 
     useEffect(() => {
         const newSocket = new W3CWebSocket('ws://localhost:8000/ws/dashboard/');
@@ -42,12 +29,36 @@ const WiFiChart = () => {
             console.log('WebSocket connected');
         });
 
+        newSocket.addEventListener('message', (event) => {
+            console.log('Message received');
+            try {
+                const receivedData = JSON.parse(event.data);
+
+                const array = [];
+                for (let i = 0; i < receivedData.length; i++) {
+                    const row = {
+                        number: i,
+                        megabits_download: receivedData[i]
+                    };
+                    array.push(row);
+                }
+                setNewJson(array);
+            } catch (error) {
+                console.log('Received non-JSON data:', event.data);
+            }
+        });
+
         setSocket(newSocket);
+
+        // Ustal interwał odświeżania wykresu (na przykład co sekundę)
+        const refreshInterval = setInterval(updateChartData, 1000);
 
         return () => {
             if (newSocket) {
                 newSocket.close();
             }
+            // Czyść interwał przed odmontowaniem komponentu
+            clearInterval(refreshInterval);
         };
     }, []);
 
@@ -63,7 +74,7 @@ const WiFiChart = () => {
                 <LineChart
                     width={500}
                     height={300}
-                    data={data}
+                    data={newJson}
                     margin={{
                         top: 5,
                         right: 30,
@@ -77,7 +88,7 @@ const WiFiChart = () => {
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="megabits_download" stroke="#b700ff" />
-                    <Line type="monotone" dataKey="megabits_upload" stroke="#00c8ff" />
+                    <Line type="monotone" dataKey="megabits_upload" stroke="#00e0f5" />
                 </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>
