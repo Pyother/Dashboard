@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Tabs, Tab } from '@mui/material';
 import WiFiChart from './WiFiChart';
 import PositionChart from './PositionChart';
-import GasesChart from './GasesChart';
+import CarbonMonoxideChart from './CarbonMonoxideChart';
+import MethaneChart from './MethaneChart';
+
 import '../App.css';
 
 const StatisticsPanel = () => {
     const [messages, setMessages] = useState([]);
     const [rows, setRows] = useState([]);
     const [currentChart, setCurrentChart] = useState(0);
-    
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8000/ws/dashboard/');
@@ -40,9 +41,13 @@ const StatisticsPanel = () => {
 
                     const megabitsDownloadString = localStorage.getItem('megabitsDownload') || '[]';
                     const megabitsUploadString = localStorage.getItem('megabitsUpload') || '[]';
+                    const carbonMonoxideDensityString = localStorage.getItem('carbonMonoxideDensity') || '[]';
+                    const methaneDensityString = localStorage.getItem('methaneDensity') || '[]';
 
                     const megabitsDownload = JSON.parse(megabitsDownloadString);
                     const megabitsUpload = JSON.parse(megabitsUploadString);
+                    const carbonMonoxideDensity = JSON.parse(carbonMonoxideDensityString);
+                    const methaneDensity = JSON.parse(methaneDensityString);
 
                     // Speedtest:
                     if (
@@ -56,6 +61,28 @@ const StatisticsPanel = () => {
                         localStorage.setItem("megabitsDownload", JSON.stringify(megabitsDownload));
                         localStorage.setItem("megabitsUpload", JSON.stringify(megabitsUpload));
                     }
+
+                    // Carbon monoxide measurement:
+                    if (
+                        typeof jsonData["carbon_monoxide_measurement"]["density"] === 'number'
+                    ) {
+                        console.log("Proper data from carbon monoxide measurement");
+                        carbonMonoxideDensity.push(parseFloat(jsonData["carbon_monoxide_measurement"]["density"]));
+
+                        localStorage.setItem("carbonMonoxideDensity", JSON.stringify(carbonMonoxideDensity));
+                    }
+
+                    // Methane measurement:
+                    if (
+                        typeof jsonData["methane_measurement"]["density"] === 'number'
+                    ) {
+                        console.log("Proper data from methane measurement");
+                        methaneDensity.push(parseFloat(jsonData["methane_measurement"]["density"]));
+
+                        localStorage.setItem("methaneDensity", JSON.stringify(methaneDensity));
+                    }
+
+                    
                 } catch (error) {
                     console.error("Błąd parsowania JSON:", error);
                 }
@@ -103,7 +130,8 @@ const StatisticsPanel = () => {
                     >
                         <Tab label="WiFi"/>
                         <Tab label="Position"/>
-                        <Tab label="Gases"/>
+                        <Tab label="Carbon Monoxide"/>
+                        <Tab label="Methane"/>
                     </Tabs>
                 </Grid>
                 {
@@ -112,7 +140,9 @@ const StatisticsPanel = () => {
                     currentChart === 1 ?
                     <PositionChart/> : 
                     currentChart === 2 ?
-                    <GasesChart/> :
+                    <CarbonMonoxideChart/> :
+                    currentChart === 3 ?
+                    <MethaneChart/> :
                     <></>
                 }
             </Grid>

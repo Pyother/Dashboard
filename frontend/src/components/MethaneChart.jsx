@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import { Grid, Button } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend ,ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const WiFiChart = () => {
+const MethaneChart = () => {
     const [socket, setSocket] = useState(null);
     const [newJson, setNewJson] = useState([]);
-    
+
     const updateChartData = () => {
-        const newDataDownload = JSON.parse(localStorage.getItem('megabitsDownload')) || [];
-        const newDataUpload = JSON.parse(localStorage.getItem('megabitsUpload')) || [];
+        const newData = JSON.parse(localStorage.getItem('methaneDensity')) || [];
         const array = [];
-        for (let i = 0; i < newDataDownload.length; i++) {
+        for(let i = 0; i < newData.length; i++) {
             const row = {
                 number: i,
-                megabits_download: newDataDownload[i],
-                megabits_upload: newDataUpload[i],
-            };
+                density: newData[i]
+            }
             array.push(row);
         }
         setNewJson(array);
@@ -43,32 +41,35 @@ const WiFiChart = () => {
 
     const sendWebSocketMessage = () => {
         if (socket && socket.readyState === socket.OPEN) {
-            socket.send("speedtest");
+            socket.send("methane_measurement");
         }
     };
 
     return (
         <Grid container className='stats'>
             <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                    width={500}
-                    height={300}
+                <AreaChart
                     data={newJson}
                     margin={{
-                        top: 5,
+                        top: 10,
                         right: 30,
-                        left: 20,
-                        bottom: 5,
+                        left: 0,
+                        bottom: 0,
                     }}
                 >
+                    <defs>
+                        <linearGradient id="colorMethane" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="10%" stopColor="#b700ff" stopOpacity={0.08}/>
+                        <stop offset="90%" stopColor="#b700ff" stopOpacity={0}/>
+                        </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="number" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="megabits_download" name="download speed" stroke="#b700ff" unit=" Mbps"/>
-                    <Line type="monotone" dataKey="megabits_upload" name="upload speed" stroke="#00e0f5" unit=" Mbps"/>
-                </LineChart>
+                    <Area type="monotone" dataKey="density" name='methane density' unit=" ppm" stroke="#b700ff" fillOpacity={1} fill="url(#colorMethane)" />
+                </AreaChart>
             </ResponsiveContainer>
             <Grid container className='centered'>
                 <Button
@@ -77,11 +78,11 @@ const WiFiChart = () => {
                     color='secondary'
                     onClick={sendWebSocketMessage}
                 >
-                    Make WiFi test
+                    Make measurement
                 </Button>
             </Grid>
         </Grid>
     );
 }
 
-export default WiFiChart;
+export default MethaneChart;
