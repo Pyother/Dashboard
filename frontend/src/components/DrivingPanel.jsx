@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, InputAdornment, IconButton, Button } from '@mui/material';
+import { Grid } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Controller from './Controller';
 import '../App.css';
@@ -43,30 +43,7 @@ const DrivingPanel = () => {
                 <h1>Area Explorer Driving Panel</h1>
             </Grid>
             <Grid item xs={12} md={12} className='statistics centered'>
-                <TextField
-                    label='Wyślij wiadomość do robota'
-                    color='success'
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position='end'>
-                                <IconButton onClick={sendWebSocketMessage}>
-                                    <SendIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <Button variant='contained' color='success' 
-                    onClick={(_) => {
-                        setMessage("Test message");
-                        sendWebSocketMessage();
-                    }}
-                >
-                    Wyślij wiadomość
-                </Button>
+                
             </Grid>
             <Grid item xs={12} md={12} className='movement-container'>
                 <Grid container>

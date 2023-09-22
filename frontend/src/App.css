@@ -12,11 +12,12 @@ h1 {
     padding: 1em;
     margin: 0;
     color: black;
+    color: white !important;
 }
 
 p {
     margin: 0.5em;
-    color: white;
+    color: white !important;
 }
 
 .root {
@@ -36,15 +37,42 @@ p {
 }
 
 .paragraph {
-    color: black; 
+    color: white !important; 
     text-align: left;
     padding: 0em 1.5em 0em 1.5em;
 }
 
 .navigation {
     width: 100%;
-    background-color: black;
-    color: black;
+    background-color: #11111d;
+}
+
+.about {
+    position: absolute;
+    bottom: 2em;
+    width: -webkit-fill-available;
+    margin-left: 2em !important;
+    margin-right: 2em !important;
+    /*padding: 1em;*
+    /*background-color: #1c1c27;*/
+    border-radius: 0.5em;
+}
+
+.MuiButtonBase-root {
+    color: white !important;
+    text-transform:none !important;
+}
+
+.MuiButtonBase-root::first-letter {
+    text-transform: uppercase !important;
+}
+
+.button {
+    background-color: #1c1c27 !important;
+    padding: 1em;
+    width: 100% !important;
+    justify-content: left !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .panel {
@@ -101,6 +129,14 @@ p {
 }
 
 @media (max-width: 900px) {
+    .button {
+        display: flex;
+        justify-content: center !important; 
+        align-items: center;
+    }
+    .button-margin {
+        margin-right: 1em !important;
+    }
     .panel {
         padding: 1em 2em;
     }
@@ -130,6 +166,9 @@ p {
 }
 
 @media (min-width: 901px) {
+    .button-margin {
+        margin-bottom: 1em !important;
+    }
     .panel {
         padding: 2em;
     }

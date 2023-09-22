@@ -74,7 +74,7 @@ const CarbonMonoxideChart = () => {
             <Grid container className='centered'>
                 <Button
                     style={{marginTop: "1em"}}
-                    variant='text'
+                    variant='outlined'
                     color='secondary'
                     onClick={sendWebSocketMessage}
                 >
