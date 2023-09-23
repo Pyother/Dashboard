@@ -10,7 +10,7 @@ function App() {
     window.innerHeight > 600 && window.innerWidth > 320 ? true : false
   )
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-  const [position, setPosition] = useState([[0, 0]]);
+  const [position, setPosition] = useState([{x: 0, y: 0}]);
 
   useEffect(() => {
     const handleResize = () => {

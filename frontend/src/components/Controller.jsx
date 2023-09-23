@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Grid, IconButton } from '@mui/material';
 import NorthIcon from '@mui/icons-material/North';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
@@ -8,24 +8,18 @@ import WestIcon from '@mui/icons-material/West';
 import SouthEastIcon from '@mui/icons-material/SouthEast';
 import SouthWestIcon from '@mui/icons-material/SouthWest';
 import SouthIcon from '@mui/icons-material/South';
-import { PositionContext } from '../App';
 import '../App.css';
 
 const Controller = () => {
 
-    const { position, setPosition } = useContext(PositionContext);
-
     const handleButtonClick = ({ coords }) => {
-        const positionArray = position;
+        const positionArray = JSON.parse(localStorage.getItem('positionArray')) || [{ x: 0, y: 0}];
         const lastPosition = positionArray[positionArray.length - 1];
-        const newCoords = [
-            lastPosition[0] + coords[0],
-            lastPosition[1] + coords[1]
-        ];
+        const newCoords = {
+            x: lastPosition['x'] + coords[0],
+            y: lastPosition['y'] + coords[1]
+        };
         positionArray.push(newCoords);
-        setPosition(positionArray);
-        console.log("Coords: ", coords);
-        console.log("Current position: ", positionArray);
         localStorage.setItem('positionArray', JSON.stringify(positionArray));
     }
 

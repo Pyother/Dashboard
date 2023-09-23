@@ -1,16 +1,17 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-const data = [
-    { x: 1, y: 10 },
-    { x: -2, y: 15 },
-    { x: 3, y: -13 },
-    { x: 3, y: 17 },
-    { x: 5, y: 20 },
-  ];
+import React, { useState } from 'react';
+import { Grid, Button } from '@mui/material';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid,
+     Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const PositionChart = () => {
+
+    const [data, setData] = useState(JSON.parse(localStorage.getItem('positionArray')));
+
+    const handleClearAll = () => {
+        localStorage.setItem('positionArray', JSON.stringify([{x: 0, y: 0}]));
+        setData(JSON.parse(localStorage.getItem('positionArray')));
+    }
+
     return (
         <Grid container className='stats'>
             <ResponsiveContainer width="100%" height="100%">
@@ -24,9 +25,19 @@ const PositionChart = () => {
                     <YAxis dataKey='y' type='number' name='Y' unit='' />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <Legend />
-                    <Scatter name='Data' data={data} fill='#8884d8' />
+                    <Scatter name='Data' data={data} fill='#b700ff' />
                 </ScatterChart>
             </ResponsiveContainer>
+            <Grid container className='centered'>
+                <Button
+                    style={{marginTop: "1em"}}
+                    variant='outlined'
+                    color='secondary'
+                    onClick={handleClearAll}
+                >
+                    Clear all positions
+                </Button>
+            </Grid>
         </Grid>
     );
 }
