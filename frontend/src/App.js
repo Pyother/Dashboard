@@ -3,12 +3,14 @@ import Navigation from './views/Navigation';
 import './App.css';
 
 export const IsMobileContext = createContext();
+export const PositionContext = createContext();
 
 function App() {
   const [areDimensionValid, setAreDimensionsValid] = useState(
     window.innerHeight > 600 && window.innerWidth > 320 ? true : false
   )
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const [position, setPosition] = useState([[0, 0]]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,13 +45,15 @@ function App() {
   return (
     <div>
       <IsMobileContext.Provider value={{ isMobile, setIsMobile }}>
-        {
-          areDimensionValid ? 
-          <Navigation/> : 
-          <div className='centered' style={{width: "100%", height: "100vh"}}>
-            <p style={{color: 'black'}}>Sorry, screen dimensions not supported</p>
-          </div>
-        }
+        <PositionContext.Provider value={{ position, setPosition }}>
+          {
+            areDimensionValid ? 
+            <Navigation/> : 
+            <div className='centered' style={{width: "100%", height: "100vh"}}>
+              <p style={{color: 'black'}}>Sorry, screen dimensions not supported</p>
+            </div>
+          }
+        </PositionContext.Provider>
       </IsMobileContext.Provider>
     </div>
   );

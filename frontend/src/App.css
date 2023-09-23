@@ -136,18 +136,18 @@ p {
 }
 
 .movement-box {
-    height: 10em;
-    width: 10em;
-    border-radius: 5em;
-    background-color: lightgrey; 
+    height: fit-content;
+    width: 15em;
+    background-color: inherit; 
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.movement-container {
-    padding: 2em;
+.controll-button {
+    padding: 1.5em;
+    background-color: #11111d;
 }
 
 .movement-info {
@@ -198,7 +198,7 @@ p {
         display: block;
     }
     .statistics {
-        height: calc(100vh - 32em);
+        height: calc(100vh - 38em);
     }
     .movement-info {
         display: none !important;
@@ -231,7 +231,7 @@ p {
         display: none;
     }
     .statistics {
-        height: calc(100vh - 26em);
+        height: calc(100vh - 30em);
     }
     .movement-info {
         display: flex !important;
@@ -246,7 +246,7 @@ p {
 
 @media (max-width: 450px) {
     .statistics-panel {
-        height: calc(100vh - 22em);
+        height: calc(100vh - 24em);
     }
 }
 
