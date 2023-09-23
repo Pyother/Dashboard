@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import Controller from './Controller';
+import Controller from '../components/Controller';
 import '../App.css';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 

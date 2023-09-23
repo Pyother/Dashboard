@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Tabs, Tab } from '@mui/material';
-import WiFiChart from './WiFiChart';
-import PositionChart from './PositionChart';
-import CarbonMonoxideChart from './CarbonMonoxideChart';
-import MethaneChart from './MethaneChart';
+import React, { useState, useEffect, useContext } from 'react';
+import { Grid, Tabs, Tab, Tooltip, Switch } from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
+import WiFiChart from '../components/WiFiChart';
+import PositionChart from '../components/PositionChart';
+import CarbonMonoxideChart from '../components/CarbonMonoxideChart';
+import MethaneChart from '../components/MethaneChart';
+import { IsMobileContext } from '../App';
 
 import '../App.css';
 
@@ -11,6 +13,7 @@ const StatisticsPanel = () => {
     const [messages, setMessages] = useState([]);
     const [rows, setRows] = useState([]);
     const [currentChart, setCurrentChart] = useState(0);
+    const { isMobile } = useContext(IsMobileContext);
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8000/ws/dashboard/');
@@ -146,6 +149,34 @@ const StatisticsPanel = () => {
                     <></>
                 }
             </Grid>
+            {
+                isMobile ?
+                <></> :
+                <Grid container className="status">
+                    <Grid item md={12}>
+                        <Grid container style={{minWidth: '14em'}}>
+                            <Grid item md={9}>
+                                <p style={{margin: "0"}}>Connection status: </p>
+                            </Grid>
+                            <Grid item md={1} style={{display: 'flex', justifyContent: 'end'}}>
+                                <Tooltip
+                                    title="Device connected"
+                                    arrow={true}
+                                >
+                                    <CircleIcon fontSize='small' color='success'/>
+                                </Tooltip>
+                            </Grid>
+                            <Grid item md={2} style={{display: 'flex', justifyContent: 'end'}}>
+                                <Tooltip
+                                    title="Device disconnected"
+                                >
+                                    <CircleIcon fontSize='small' /> 
+                                </Tooltip>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            }
         </Grid>
     );
 };

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createContext} from 'react';
-import Navigation from './components/Navigation';
+import Navigation from './views/Navigation';
 import './App.css';
 
 export const IsMobileContext = createContext();
