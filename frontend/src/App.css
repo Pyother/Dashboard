@@ -135,6 +135,12 @@ p {
     border-radius: 2em;
 }
 
+.movement-container {
+    padding: 2em;
+    border-bottom-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
 .movement-box {
     height: fit-content;
     width: 15em;
@@ -143,15 +149,18 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0.5em;
+}
+
+.controll-button-container {
+    padding: 0.5em;
 }
 
 .controll-button {
-    padding: 1.5em;
+    padding: 1em;
+    border-radius: 0.5em;
     background-color: #11111d;
-}
-
-.movement-info {
-    padding: 0em 2em;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .scroll-container {
@@ -170,6 +179,10 @@ p {
 .stats {
     padding: 2em;
     height: calc(100% - 2em);
+}
+.statistics {
+    border: 1px dashed white;
+    color: white;
 }
 
 @media (max-width: 900px) {
@@ -198,10 +211,10 @@ p {
         display: block;
     }
     .statistics {
-        height: calc(100vh - 38em);
+        height: calc(100vh - 36em);
     }
-    .movement-info {
-        display: none !important;
+    .movement-box {
+        width: 100%;
     }
     .stats {
         padding-left: 0;
@@ -231,10 +244,7 @@ p {
         display: none;
     }
     .statistics {
-        height: calc(100vh - 30em);
-    }
-    .movement-info {
-        display: flex !important;
+        height: calc(100vh - 28em);
     }
 }
 

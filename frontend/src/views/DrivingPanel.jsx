@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Controller from '../components/Controller';
 import '../App.css';
@@ -43,22 +43,17 @@ const DrivingPanel = () => {
                 <h1>Area Explorer Driving Panel</h1>
             </Grid>
             <Grid item xs={12} md={12} className='statistics centered'>
-                
+                (Miejsce na panel statystyk)
             </Grid>
-            <Grid item xs={12} md={12} className='movement-container'>
-                <Grid container>
-                    <Grid item xs={12} md={5} className='centered'>
-                        <Controller />
+            <Grid item xs={12} md={12} className='movement-container centered'>
+                <Grid container className='centered'>
+                    <Grid item xs={12} md={12} className='centered' style={{paddingBottom: "1em"}}>
+                        <Typography variant='p' style={{color: "white"}}>
+                            Kontroler
+                        </Typography>
                     </Grid>
-                    <Grid item xs={0} md={7} className='movement-info'>
-                        <div>
-                            <p style={{ color: 'black' }}>
-                                <strong>How to drive?</strong>
-                            </p>
-                            <p style={{ color: 'black' }}>
-                                Gently move the circle on the left and the vehicle will move in the indicated direction.
-                            </p>
-                        </div>
+                    <Grid item xs={12} md={12} className='centered'>
+                        <Controller />
                     </Grid>
                 </Grid>
             </Grid>
