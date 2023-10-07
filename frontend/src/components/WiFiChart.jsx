@@ -85,3 +85,5 @@ const WiFiChart = () => {
 }
 
 export default WiFiChart;
+
+
