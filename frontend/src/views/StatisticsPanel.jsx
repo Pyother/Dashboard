@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Grid, Tabs, Tab, Tooltip, Switch } from '@mui/material';
+import { Grid, Tabs, Tab, Tooltip, Chip } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import WiFiChart from '../components/WiFiChart';
 import PositionChart from '../components/PositionChart';
@@ -152,30 +152,26 @@ const StatisticsPanel = () => {
             {
                 isMobile ?
                 <></> :
-                <Grid container className="status">
-                    <Grid item md={12}>
-                        <Grid container style={{minWidth: '14em'}}>
-                            <Grid item md={9}>
-                                <p style={{margin: "0"}}>Connection status: </p>
-                            </Grid>
-                            <Grid item md={1} style={{display: 'flex', justifyContent: 'end'}}>
-                                <Tooltip
-                                    title="Device connected"
-                                    arrow={true}
-                                >
-                                    <CircleIcon fontSize='small' color='success'/>
-                                </Tooltip>
-                            </Grid>
-                            <Grid item md={2} style={{display: 'flex', justifyContent: 'end'}}>
-                                <Tooltip
-                                    title="Device disconnected"
-                                >
-                                    <CircleIcon fontSize='small' /> 
-                                </Tooltip>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <Tooltip
+                    title="Device connected"
+                    arrow={true}
+                >
+                    <Chip
+                        label="Connection status"
+                        variant="outlined"
+                        className="status"
+                        style={{
+                            color: 'white',
+                            backgroundColor: '#263238'
+                        }}
+                        icon={
+                            <CircleIcon 
+                                fontSize='small' 
+                                style={{color: 'green'}}
+                            />
+                        }
+                    />
+                </Tooltip>
             }
         </Grid>
     );

@@ -58,7 +58,7 @@ const Navigation = () => {
                             !isMobile ?
                             <Grid item xs={0} md={12} className="about">
                                 <Grid container>    
-                                    <Grid item md={12} /*className="centered"*/ style={{paddingBottom: "0.5em"}}>
+                                    <Grid item md={12} className="centered" style={{paddingBottom: "0.5em"}}>
                                         <Tooltip
                                             title="Device you're connected with"
                                             arrow placement="top"
@@ -66,12 +66,20 @@ const Navigation = () => {
                                             <Chip 
                                                 label="Raspberry Pi 3A+" 
                                                 variant="outlined"
-                                                color="secondary"
+                                                style={{
+                                                    color: 'white',
+                                                    backgroundColor: '#263238'
+                                                }}
                                             />
                                         </Tooltip>
                                     </Grid>
-                                    <Grid item md={12} style={{/*textAlign: "center"*/}}>
-                                        <p>(Some info about the author)</p>
+                                    <Grid item md={12} style={{textAlign: "center"}}>
+                                        <p>Designed & developed by </p> 
+                                        <p style={{
+                                            fontFamily: "'Dancing Script', cursive"
+                                        }}>
+                                            Piotr Sobol
+                                        </p>
                                     </Grid>
                                 </Grid>
                             </Grid> :
