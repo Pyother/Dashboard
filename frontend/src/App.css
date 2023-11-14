@@ -111,6 +111,19 @@ p {
     text-transform: uppercase !important;
 }
 
+.recharts-responsive-container {
+    background-color: #1c1c27 !important;
+}
+
+.recharts-legend-wrapper {
+    top: 4.2em !important;
+    right: -1em !important;
+}
+
+.css-3su884-MuiPaper-root {
+    box-shadow: none !important;
+}
+
 .button {
     background-color: #1c1c27 !important;
     padding: 1em;
@@ -181,8 +194,8 @@ p {
     height: calc(100% - 2em);
 }
 .statistics {
-    border: 1px dashed white;
-    color: white;
+    /*border: 1px dashed white;
+    color: white;*/
 }
 
 @media (max-width: 900px) {
@@ -219,6 +232,9 @@ p {
     .stats {
         padding-left: 0;
         padding-right: 0;
+    }
+    .recharts-legend-wrapper {
+        display: none !important;
     }
 }
 

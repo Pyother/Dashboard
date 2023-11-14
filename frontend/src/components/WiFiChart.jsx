@@ -8,14 +8,12 @@ const WiFiChart = () => {
     const [newJson, setNewJson] = useState([]);
     
     const updateChartData = () => {
-        const newDataDownload = JSON.parse(localStorage.getItem('megabitsDownload')) || [];
-        const newDataUpload = JSON.parse(localStorage.getItem('megabitsUpload')) || [];
+        const newDataSignalLevel = JSON.parse(localStorage.getItem('signalLevel')) || [];
         const array = [];
-        for (let i = 0; i < newDataDownload.length; i++) {
+        for (let i = 0; i < newDataSignalLevel.length; i++) {
             const row = {
                 number: i,
-                megabits_download: newDataDownload[i],
-                megabits_upload: newDataUpload[i],
+                signal_level: newDataSignalLevel[i],
             };
             array.push(row);
         }
@@ -66,8 +64,7 @@ const WiFiChart = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="megabits_download" name="download speed" stroke="#b700ff" unit=" Mbps"/>
-                    <Line type="monotone" dataKey="megabits_upload" name="upload speed" stroke="#00e0f5" unit=" Mbps"/>
+                    <Line type="monotone" dataKey="signal_level" name="signal level" stroke="#b700ff" unit=" dBm"/>
                 </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>

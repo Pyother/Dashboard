@@ -42,26 +42,26 @@ const StatisticsPanel = () => {
                     const jsonData = JSON.parse(jsonString);
                     console.log(jsonData);
 
-                    const megabitsDownloadString = localStorage.getItem('megabitsDownload') || '[]';
+                    const signalLevelString = localStorage.getItem('signalLevel') || '[]';
                     const megabitsUploadString = localStorage.getItem('megabitsUpload') || '[]';
                     const carbonMonoxideDensityString = localStorage.getItem('carbonMonoxideDensity') || '[]';
                     const methaneDensityString = localStorage.getItem('methaneDensity') || '[]';
 
-                    const megabitsDownload = JSON.parse(megabitsDownloadString);
+                    const signalLevel = JSON.parse(signalLevelString);
                     const megabitsUpload = JSON.parse(megabitsUploadString);
                     const carbonMonoxideDensity = JSON.parse(carbonMonoxideDensityString);
                     const methaneDensity = JSON.parse(methaneDensityString);
 
                     // Speedtest:
                     if (
-                        typeof jsonData["speedtest"]["megabits_download"] === 'number' &&
+                        typeof jsonData["speedtest"]["signal_level"] === 'number' &&
                         typeof jsonData["speedtest"]["megabits_upload"] === 'number'
                     ) {
                         console.log("Proper speedtest data");
-                        megabitsDownload.push(parseFloat(jsonData["speedtest"]["megabits_download"]));
+                        signalLevel.push(parseFloat(jsonData["speedtest"]["signal_level"]));
                         megabitsUpload.push(parseFloat(jsonData["speedtest"]["megabits_upload"]));
                         
-                        localStorage.setItem("megabitsDownload", JSON.stringify(megabitsDownload));
+                        localStorage.setItem("signalLevel", JSON.stringify(signalLevel));
                         localStorage.setItem("megabitsUpload", JSON.stringify(megabitsUpload));
                     }
 
@@ -84,7 +84,6 @@ const StatisticsPanel = () => {
 
                         localStorage.setItem("methaneDensity", JSON.stringify(methaneDensity));
                     }
-
                     
                 } catch (error) {
                     console.error("Błąd parsowania JSON:", error);

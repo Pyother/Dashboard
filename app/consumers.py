@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 from channels.generic.websocket import AsyncWebsocketConsumer
 import asyncio
+import json
 
 class MQTTConsumer(AsyncWebsocketConsumer):
 
@@ -42,20 +43,20 @@ class MQTTConsumer(AsyncWebsocketConsumer):
 
         # Speedtest callback handling:
         if "wifitest_callback" in message:
-            print("Speedtest callback received")
-            parts = message.split(":")
-            megabits_download = parts[1]
-            megabits_upload = parts[2]
-            print(megabits_download)
-            print(megabits_upload)
+            print("Speedtest callback received: ")
+            essid = ((message.split("|"))[1].split(":"))[0]
+            signal_level = ((message.split("|"))[1].split(":"))[1]
+
+            print("Signal level: " + signal_level)
+
             data = {
                 'position': {
                     'x': 'null',
                     'y': 'null',
                 },
                 'speedtest': {
-                    'megabits_download': float(megabits_download),
-                    'megabits_upload': float(megabits_upload),
+                    'signal_level': float(signal_level),
+                    'megabits_upload': float(1),
                 },
                 'carbon_monoxide_measurement': {
                     'density': 'null',
