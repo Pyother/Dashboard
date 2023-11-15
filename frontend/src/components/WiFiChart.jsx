@@ -48,7 +48,9 @@ const WiFiChart = () => {
     return (
         <Grid container className='stats'>
             <ResponsiveContainer width="100%" height="100%">
-                <LineChart
+                <LineChart 
+                    width={500} 
+                    height={300} 
                     data={newJson}
                     margin={{
                         top: 5,
@@ -57,12 +59,10 @@ const WiFiChart = () => {
                         bottom: 5,
                     }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="number" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="signal_level" name="signal level" stroke="#b700ff" unit=" dBm"/>
+                    <XAxis dataKey="name"/>
+                    <YAxis/>
+                    <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                    <Line type="monotone" dataKey="signal_level" name="signal level" stroke="#8884d8" unit=" dBm" />
                 </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>

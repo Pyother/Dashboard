@@ -40,8 +40,6 @@ function App() {
     };
   }, []);
 
-  
-
   return (
     <div>
       <IsMobileContext.Provider value={{ isMobile, setIsMobile }}>
