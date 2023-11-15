@@ -191,8 +191,11 @@ p {
 
 .stats {
     padding: 2em;
+    padding-left: 0;
+    padding-right: 0;
     height: calc(100% - 2em);
 }
+
 .statistics {
     /*border: 1px dashed white;
     color: white;*/
@@ -228,10 +231,6 @@ p {
     }
     .movement-box {
         width: 100%;
-    }
-    .stats {
-        padding-left: 0;
-        padding-right: 0;
     }
     .recharts-legend-wrapper {
         display: none !important;

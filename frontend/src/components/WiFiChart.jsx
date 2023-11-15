@@ -49,13 +49,11 @@ const WiFiChart = () => {
         <Grid container className='stats'>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                    width={500}
-                    height={300}
                     data={newJson}
                     margin={{
                         top: 5,
-                        right: 30,
-                        left: 20,
+                        right: 60,
+                        left: 5,
                         bottom: 5,
                     }}
                 >
