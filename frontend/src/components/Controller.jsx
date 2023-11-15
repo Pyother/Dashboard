@@ -157,7 +157,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [-1, 1], direction: 'northwest' });
+                                handleButtonClick({ coords: [-10.5, 17], direction: 'northwest' });
                                 setDrivingDirection({
                                     direction: "northwest",
                                     active: true
@@ -185,7 +185,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [0, 1], direction: 'north' });
+                                handleButtonClick({ coords: [0, 20], direction: 'north' });
                                 setDrivingDirection({
                                     direction: "north",
                                     active: true
@@ -213,7 +213,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [1, 1], direction: 'northeast' });
+                                handleButtonClick({ coords: [10.5, 17], direction: 'northeast' });
                                 setDrivingDirection({
                                     direction: "northeast",
                                     active: true
@@ -242,7 +242,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [-1, -1], direction: 'southwest' });
+                                handleButtonClick({ coords: [-10.5, -17], direction: 'southwest' });
                                 setDrivingDirection({
                                     direction: "southwest",
                                     active: true
@@ -270,7 +270,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [0, -1], direction: 'south' });
+                                handleButtonClick({ coords: [0, -20], direction: 'south' });
                                 setDrivingDirection({
                                     direction: "south",
                                     active: true
@@ -298,7 +298,7 @@ const Controller = () => {
                         }}
                     >
                         <IconButton onClick={(_) => {
-                                handleButtonClick({ coords: [1, -1], direction: 'southeast' });
+                                handleButtonClick({ coords: [10.5, -17], direction: 'southeast' });
                                 setDrivingDirection({
                                     direction: "southeast",
                                     active: true
