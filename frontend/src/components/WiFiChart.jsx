@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Button } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState, useContext } from 'react';
+import { Grid, Button, Tooltip as MUITooltip } from '@mui/material';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { IsMobileContext } from '../App.js';
 
 const WiFiChart = () => {
     const [socket, setSocket] = useState(null);
     const [newJson, setNewJson] = useState([]);
+    const { isMobile } = useContext(IsMobileContext);
+    const [measuring, setMeasuring] = useState(false);
     
     const updateChartData = () => {
         const newDataSignalLevel = JSON.parse(localStorage.getItem('signalLevel')) || [];
@@ -29,7 +32,7 @@ const WiFiChart = () => {
 
         setSocket(newSocket);
 
-        const refreshInterval = setInterval(updateChartData, 1000);
+        const refreshInterval = setInterval(updateChartData, 500);
 
         return () => {
             if (newSocket) {
@@ -38,6 +41,13 @@ const WiFiChart = () => {
             clearInterval(refreshInterval);
         };
     }, []);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            console.log('verfewj');
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, [1000]); 
 
     const sendWebSocketMessage = () => {
         if (socket && socket.readyState === socket.OPEN) {
@@ -54,26 +64,66 @@ const WiFiChart = () => {
                     data={newJson}
                     margin={{
                         top: 5,
-                        right: 60,
-                        left: 5,
+                        right: !isMobile ? 70 : 30,
+                        left: !isMobile ? 60 : 5,
                         bottom: 5,
                     }}
                 >
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
+                    <XAxis dataKey="name" unit=""/>
+                    <YAxis unit={isMobile ? "" : "dBm"}/>
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                    <Line type="monotone" dataKey="signal_level" name="signal level" stroke="#8884d8" unit=" dBm" />
+                    <Line type="monotone" dataKey="signal_level" name="signal level" stroke="#9c27b0" unit=" dBm" />
                 </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>
-                <Button
-                    style={{marginTop: "1em"}}
-                    variant='outlined'
-                    color='secondary'
-                    onClick={sendWebSocketMessage}
+                <MUITooltip
+                    title="Start measuring the signal level of the WiFi network"
+                    arrow placement="top"
                 >
-                    Make WiFi test
-                </Button>
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='contained'
+                        color='secondary'
+                        disabled={measuring}
+                        onClick={(_) => {
+                            setMeasuring(true);
+                            console.log("Start");
+                        }}
+                    >
+                        Start
+                    </Button>
+                </MUITooltip>
+                <MUITooltip
+                    title="Stop measuring the signal level of the WiFi network"
+                    arrow placement="top"
+                >
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='contained'
+                        color='secondary'
+                        disabled={!measuring}
+                        onClick={(_) => {
+                            setMeasuring(false);
+                            console.log("Stop");
+                        }}
+                    >
+                        Stop
+                    </Button>
+                </MUITooltip>
+                <MUITooltip
+                    title="Makes single test of the signal level of the WiFi network"
+                    arrow placement="top"
+                >
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='outlined'
+                        color='secondary'
+                        onClick={sendWebSocketMessage}
+                    >
+                        Test
+                    </Button>
+                </MUITooltip>
             </Grid>
         </Grid>
     );

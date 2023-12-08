@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Tabs, Tab, Tooltip, Chip } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import WiFiChart from '../components/WiFiChart';
-import PositionChart from '../components/PositionChart';
+import Map from '../components/Map';
 import CarbonMonoxideChart from '../components/CarbonMonoxideChart';
 import MethaneChart from '../components/MethaneChart';
 import { IsMobileContext } from '../App';
@@ -140,7 +140,7 @@ const StatisticsPanel = () => {
                     currentChart === 0 ? 
                     <WiFiChart/> : 
                     currentChart === 1 ?
-                    <PositionChart/> : 
+                    <Map/> : 
                     currentChart === 2 ?
                     <CarbonMonoxideChart/> :
                     currentChart === 3 ?

@@ -14,8 +14,6 @@ const PositionChart = () => {
         setData(JSON.parse(localStorage.getItem('positionArray')));
     }
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
-
     return (
         <Grid container className='stats'>
             <ResponsiveContainer width="100%" height="100%">
