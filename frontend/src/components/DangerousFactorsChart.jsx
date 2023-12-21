@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button } from '@mui/material';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { IsMobileContext } from '../App.js';
 
-const CarbonMonoxideChart = () => {
+const DangerousFactorsChart = () => {
+
     const [socket, setSocket] = useState(null);
     const [newJson, setNewJson] = useState([]);
+    const { isMobile } = useContext(IsMobileContext);
 
     const updateChartData = () => {
         const newData = JSON.parse(localStorage.getItem('carbonMonoxideDensity')) || [];
@@ -47,29 +50,24 @@ const CarbonMonoxideChart = () => {
 
     return (
         <Grid container className='stats'>
-            <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
+            <ResponsiveContainer>
+                <LineChart
+                    width={500}
+                    height={300}
                     data={newJson}
                     margin={{
-                        top: 10,
-                        right: 30,
-                        left: 0,
-                        bottom: 0,
+                        top: 5,
+                        right: !isMobile ? 70 : 30,
+                        left: !isMobile ? 60 : 5,
+                        bottom: 5,
                     }}
                 >
-                    <defs>
-                        <linearGradient id="colorCarbonMonoxide" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="10%" stopColor="#b700ff" stopOpacity={0.08}/>
-                        <stop offset="90%" stopColor="#b700ff" stopOpacity={0}/>
-                        </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="number" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Area type="monotone" dataKey="density" name='carbon monoxide density' unit=" ppm" stroke="#b700ff" fillOpacity={1} fill="url(#colorCarbonMonoxide)" />
-                </AreaChart>
+                    <XAxis dataKey="name" unit=""/>
+                    <YAxis unit={isMobile ? "" : "%"}/>
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                    <Line type="monotone" dataKey="density" name="density" stroke="#9c27b0" unit=" %" />
+                </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>
                 <Button
@@ -85,4 +83,4 @@ const CarbonMonoxideChart = () => {
     );
 }
 
-export default CarbonMonoxideChart;
+export default DangerousFactorsChart;

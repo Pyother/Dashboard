@@ -2,12 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Tabs, Tab, Tooltip, Chip } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import WiFiChart from '../components/WiFiChart';
-import Map from '../components/Map';
-import CarbonMonoxideChart from '../components/CarbonMonoxideChart';
-import MethaneChart from '../components/MethaneChart';
+import DangerousFactorsChart from '../components/DangerousFactorsChart';
 import { IsMobileContext } from '../App';
-
 import '../App.css';
+import PositionChart from '../components/PositionChart';
 
 const StatisticsPanel = () => {
     const [messages, setMessages] = useState([]);
@@ -132,19 +130,16 @@ const StatisticsPanel = () => {
                     >
                         <Tab label="WiFi"/>
                         <Tab label="Position"/>
-                        <Tab label="Carbon Monoxide"/>
-                        <Tab label="Methane"/>
+                        <Tab label="Dangerous factors"/>
                     </Tabs>
                 </Grid>
                 {
                     currentChart === 0 ? 
                     <WiFiChart/> : 
                     currentChart === 1 ?
-                    <Map/> : 
+                    <PositionChart/> : 
                     currentChart === 2 ?
-                    <CarbonMonoxideChart/> :
-                    currentChart === 3 ?
-                    <MethaneChart/> :
+                    <DangerousFactorsChart/> :
                     <></>
                 }
             </Grid>
