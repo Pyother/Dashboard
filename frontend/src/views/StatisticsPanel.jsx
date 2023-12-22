@@ -31,6 +31,16 @@ const StatisticsPanel = () => {
                 setRows(prevRows => [...prevRows, newRow]);
             }
 
+            if(message.includes("density_measurement_callback")) {
+                const densityArray = JSON.parse(localStorage.getItem('density')) || [];
+                const data = {
+                    density: parseFloat(message.split("|")[1]),
+                    time: new Date().toLocaleTimeString()
+                }
+                densityArray.push(data);
+                localStorage.setItem('density', JSON.stringify(densityArray));
+            }
+
             if(message.includes("Data_callback")) {
                 console.log("Data Callback")
                 const parts = message.split("|")

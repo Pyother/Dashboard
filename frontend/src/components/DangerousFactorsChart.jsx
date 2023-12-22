@@ -1,26 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Tooltip as MUITooltip } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { IsMobileContext } from '../App.js';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Parser } from '@json2csv/plainjs';
 
 const DangerousFactorsChart = () => {
 
     const [socket, setSocket] = useState(null);
-    const [newJson, setNewJson] = useState([]);
+    const [json, setJson] = useState([]);
+    const [measuring, setMeasuring] = useState(false);
     const { isMobile } = useContext(IsMobileContext);
+    const parser = new Parser();
 
     const updateChartData = () => {
-        const newData = JSON.parse(localStorage.getItem('carbonMonoxideDensity')) || [];
+        const data = JSON.parse(localStorage.getItem('density')) || [];
         const array = [];
-        for(let i = 0; i < newData.length; i++) {
+        for(let i = 0; i < data.length; i++) {
             const row = {
                 number: i,
-                density: newData[i]
+                density: data[i].density,
+                time: data[i].time
             }
             array.push(row);
         }
-        setNewJson(array);
+        setJson(array);
     };
 
     useEffect(() => {
@@ -42,9 +48,9 @@ const DangerousFactorsChart = () => {
         };
     }, []);
 
-    const sendWebSocketMessage = () => {
+    const sendWebSocketMessage = (message) => {
         if (socket && socket.readyState === socket.OPEN) {
-            socket.send("carbon_monoxide_measurement");
+            socket.send(message);
         }
     };
 
@@ -54,7 +60,7 @@ const DangerousFactorsChart = () => {
                 <LineChart
                     width={500}
                     height={300}
-                    data={newJson}
+                    data={json}
                     margin={{
                         top: 5,
                         right: !isMobile ? 70 : 30,
@@ -70,14 +76,66 @@ const DangerousFactorsChart = () => {
                 </LineChart>
             </ResponsiveContainer>
             <Grid container className='centered'>
-                <Button
-                    style={{marginTop: "1em"}}
-                    variant='outlined'
-                    color='secondary'
-                    onClick={sendWebSocketMessage}
+                <MUITooltip
+                    title={measuring ? "Stop measurement" : "Start measuring"}
+                    arrow placement="top"
                 >
-                    Make measurement
-                </Button>
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='contained'
+                        color='secondary'
+                        onClick={(_) => {
+                            setMeasuring(!measuring);
+                            if(measuring) sendWebSocketMessage("density_measurement_stop");
+                            else sendWebSocketMessage("density_measurement_start");
+                        }}
+                    >
+                        {measuring ? "Stop" : "Start"}
+                    </Button>
+                </MUITooltip>
+                <MUITooltip
+                    title="Save measurement results"
+                    arrow placement="top"
+                >
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='outlined'
+                        color='secondary'
+                        onClick={() => {
+                            const csv = parser.parse(json);
+                            console.log(csv);
+
+                            const blob = new Blob([csv], { type: 'text/csv' });
+                            const url = URL.createObjectURL(blob);
+
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = 'measurement_results.csv';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }}
+                    >
+                        <SaveAltIcon/>
+                    </Button>
+                </MUITooltip> : <></>
+                <MUITooltip
+                    title="Clear measurement results"
+                    arrow placement="top"
+                >
+                    <Button
+                        style={{margin: "1em"}}
+                        variant='outlined'
+                        color='secondary'
+                        onClick={(_) => {
+                            localStorage.setItem('density', JSON.stringify([]));
+                            updateChartData();
+                        }}
+                    >
+                        <ClearIcon/>
+                    </Button>
+                </MUITooltip>
             </Grid>
         </Grid>
     );
