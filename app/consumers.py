@@ -42,35 +42,13 @@ class MQTTConsumer(AsyncWebsocketConsumer):
         print("Backend -> Received message: " + message)
 
         # Speedtest callback handling:
-        if "wifitest_callback" in message:
-            print("Speedtest callback received: ")
-            essid = ((message.split("|"))[1].split(":"))[0]
-            signal_level = ((message.split("|"))[1].split(":"))[1]
-
-            print("Signal level: " + signal_level)
-
-            data = {
-                'position': {
-                    'x': 'null',
-                    'y': 'null',
-                },
-                'speedtest': {
-                    'signal_level': float(signal_level),
-                    'megabits_upload': float(1),
-                },
-                'carbon_monoxide_measurement': {
-                    'density': 'null',
-                },
-                'methane_measurement': {
-                    'density': 'null',
-                }
-            }
-            message = 'Data_callback|' + str(data)
+        if "wifi_measurement_callback" in message:
+            print("WiFi measurement callback received: " + message)
         # ---------------------------------------------------------------
 
         # Methane measurement callback handling:
         if "density_measurement_callback" in message:
-            print("Density measurement callback received")
+            print("Density measurement callback received: " + message)
         # ---------------------------------------------------------------
 
         if len(self.mqtt_messages) != 0: 

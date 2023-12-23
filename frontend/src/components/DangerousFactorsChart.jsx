@@ -101,6 +101,7 @@ const DangerousFactorsChart = () => {
                         style={{margin: "1em"}}
                         variant='outlined'
                         color='secondary'
+                        disabled={json.length < 1}
                         onClick={() => {
                             const csv = parser.parse(json);
                             console.log(csv);
@@ -110,7 +111,7 @@ const DangerousFactorsChart = () => {
 
                             const a = document.createElement('a');
                             a.href = url;
-                            a.download = 'measurement_results.csv';
+                            a.download = 'density_measurement_results.csv';
                             document.body.appendChild(a);
                             a.click();
                             document.body.removeChild(a);

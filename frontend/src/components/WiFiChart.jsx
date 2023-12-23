@@ -3,24 +3,31 @@ import { Grid, Button, Tooltip as MUITooltip } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { IsMobileContext } from '../App.js';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Parser } from '@json2csv/plainjs';
 
 const WiFiChart = () => {
     const [socket, setSocket] = useState(null);
-    const [newJson, setNewJson] = useState([]);
+    const [json, setJson] = useState([]);
     const { isMobile } = useContext(IsMobileContext);
     const [measuring, setMeasuring] = useState(false);
+    const parser = new Parser();
     
     const updateChartData = () => {
-        const newDataSignalLevel = JSON.parse(localStorage.getItem('signalLevel')) || [];
+        const data = JSON.parse(localStorage.getItem('wifi')) || [];
         const array = [];
-        for (let i = 0; i < newDataSignalLevel.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             const row = {
                 number: i,
-                signal_level: newDataSignalLevel[i],
+                signal_level: data[i].signal_level,
+                ssid: data[i].ssid,
+                time: data[i].time,
+                position: data[i].position
             };
             array.push(row);
         }
-        setNewJson(array);
+        setJson(array);
     };
 
     useEffect(() => {
@@ -42,16 +49,9 @@ const WiFiChart = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            console.log('verfewj');
-        }, 1000);
-        return () => clearInterval(intervalId);
-    }, [1000]); 
-
-    const sendWebSocketMessage = () => {
+    const sendWebSocketMessage = (message) => {
         if (socket && socket.readyState === socket.OPEN) {
-            socket.send("speedtest");
+            socket.send(message);
         }
     };
 
@@ -61,7 +61,7 @@ const WiFiChart = () => {
                 <LineChart 
                     width={500} 
                     height={300} 
-                    data={newJson}
+                    data={json}
                     margin={{
                         top: 5,
                         right: !isMobile ? 70 : 30,
@@ -78,20 +78,20 @@ const WiFiChart = () => {
             </ResponsiveContainer>
             <Grid container className='centered'>
                 <MUITooltip
-                    title="Start measuring the signal level of the WiFi network"
+                    title={measuring ? "Stop measurement" : "Start measurement"}
                     arrow placement="top"
                 >
                     <Button
                         style={{margin: "1em"}}
                         variant='contained'
                         color='secondary'
-                        disabled={measuring}
                         onClick={(_) => {
-                            setMeasuring(true);
-                            console.log("Start");
+                            setMeasuring(!measuring);
+                            if(measuring) sendWebSocketMessage("wifi_measurement_stop");
+                            else sendWebSocketMessage("wifi_measurement_start");
                         }}
                     >
-                        Start
+                        {measuring ? "Stop" : "Start" }
                     </Button>
                 </MUITooltip>
                 <MUITooltip
@@ -100,28 +100,42 @@ const WiFiChart = () => {
                 >
                     <Button
                         style={{margin: "1em"}}
-                        variant='contained'
+                        variant='outlined'
                         color='secondary'
-                        disabled={!measuring}
+                        disabled={json.length < 1}
                         onClick={(_) => {
-                            setMeasuring(false);
-                            console.log("Stop");
+                            const csv = parser.parse(json);
+                            console.log(csv);
+
+                            const blob = new Blob([csv], { type: 'text/csv' });
+                            const url = URL.createObjectURL(blob);
+
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = 'wifi_measurement_results.csv';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
                         }}
                     >
-                        Stop
+                        <SaveAltIcon/>
                     </Button>
                 </MUITooltip>
                 <MUITooltip
-                    title="Makes single test of the signal level of the WiFi network"
+                    title="Clear measurement results"
                     arrow placement="top"
                 >
                     <Button
                         style={{margin: "1em"}}
                         variant='outlined'
                         color='secondary'
-                        onClick={sendWebSocketMessage}
+                        onClick={(_) => {
+                            localStorage.setItem('wifi', JSON.stringify([]));
+                            updateChartData();
+                        }}
                     >
-                        Test
+                        <ClearIcon/>
                     </Button>
                 </MUITooltip>
             </Grid>

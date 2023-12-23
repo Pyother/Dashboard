@@ -40,62 +40,19 @@ const StatisticsPanel = () => {
                 densityArray.push(data);
                 localStorage.setItem('density', JSON.stringify(densityArray));
             }
-
-            if(message.includes("Data_callback")) {
-                console.log("Data Callback")
-                const parts = message.split("|")
-                const jsonString = parts[1].replace(/'/g, '"');
-                
-                try {
-                    const jsonData = JSON.parse(jsonString);
-                    console.log(jsonData);
-
-                    const signalLevelString = localStorage.getItem('signalLevel') || '[]';
-                    const megabitsUploadString = localStorage.getItem('megabitsUpload') || '[]';
-                    const carbonMonoxideDensityString = localStorage.getItem('carbonMonoxideDensity') || '[]';
-                    const methaneDensityString = localStorage.getItem('methaneDensity') || '[]';
-
-                    const signalLevel = JSON.parse(signalLevelString);
-                    const megabitsUpload = JSON.parse(megabitsUploadString);
-                    const carbonMonoxideDensity = JSON.parse(carbonMonoxideDensityString);
-                    const methaneDensity = JSON.parse(methaneDensityString);
-
-                    // Speedtest:
-                    if (
-                        typeof jsonData["speedtest"]["signal_level"] === 'number' &&
-                        typeof jsonData["speedtest"]["megabits_upload"] === 'number'
-                    ) {
-                        console.log("Proper speedtest data");
-                        signalLevel.push(parseFloat(jsonData["speedtest"]["signal_level"]));
-                        megabitsUpload.push(parseFloat(jsonData["speedtest"]["megabits_upload"]));
-                        
-                        localStorage.setItem("signalLevel", JSON.stringify(signalLevel));
-                        localStorage.setItem("megabitsUpload", JSON.stringify(megabitsUpload));
-                    }
-
-                    // Carbon monoxide measurement:
-                    if (
-                        typeof jsonData["carbon_monoxide_measurement"]["density"] === 'number'
-                    ) {
-                        console.log("Proper data from carbon monoxide measurement");
-                        carbonMonoxideDensity.push(parseFloat(jsonData["carbon_monoxide_measurement"]["density"]));
-
-                        localStorage.setItem("carbonMonoxideDensity", JSON.stringify(carbonMonoxideDensity));
-                    }
-
-                    // Methane measurement:
-                    if (
-                        typeof jsonData["methane_measurement"]["density"] === 'number'
-                    ) {
-                        console.log("Proper data from methane measurement");
-                        methaneDensity.push(parseFloat(jsonData["methane_measurement"]["density"]));
-
-                        localStorage.setItem("methaneDensity", JSON.stringify(methaneDensity));
-                    }
-                    
-                } catch (error) {
-                    console.error("Błąd parsowania JSON:", error);
+            
+            if(message.includes("wifi_measurement_callback")) {
+                const wifiArray = JSON.parse(localStorage.getItem('wifi')) || [];
+                const positionArray = JSON.parse(localStorage.getItem('positionArray')) || [];
+                const currentPosition = positionArray.length > 0 ? positionArray[positionArray.length - 1] : null;
+                const data = {
+                    signal_level: parseFloat(message.split(":")[1]),
+                    ssid: (message.split("|")[1]).split(":")[0],
+                    time: new Date().toLocaleTimeString(),
+                    position: currentPosition
                 }
+                wifiArray.push(data);
+                localStorage.setItem('wifi', JSON.stringify(wifiArray));
             }
 
             updatePage(message);
