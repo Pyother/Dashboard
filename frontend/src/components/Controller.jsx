@@ -32,7 +32,7 @@ const Controller = () => {
             38: false,
             39: false,
             40: false
-        }; 
+        };
 
         let timeoutId = null;
       
