@@ -19,6 +19,7 @@ This application serves as a universal tool for fully utilizing a vehicle's capa
 ## Visualization
 
 ![Application Dashboard](https://github.com/user-attachments/assets/51d86b1b-638a-49d1-b5e2-bb0ef8355f82)
+
 *Application control and monitoring dashboard with data visualization.*
 
 ---
